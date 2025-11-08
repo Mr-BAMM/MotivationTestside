@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Motivationsspruch</title>
+  <style>
+    :root { --bg:#0f172a; --card:#111827; --text:#e5e7eb; --muted:#9ca3af; }
+    html, body { height:100%; }
+    body {
+      margin:0; display:flex; align-items:center; justify-content:center; min-height:100vh;
+      background: radial-gradient(1200px 800px at 70% 10%, #1f2937 0%, var(--bg) 60%);
+      color: var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    .card {
+      width:min(880px, 92vw); padding:28px 28px 22px; border-radius:20px; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
+    }
+    .header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    h1 { font-size:18px; font-weight:600; letter-spacing:.2px; margin:0; color:#cbd5e1; }
+    .time { font-size:12px; color: var(--muted); }
+    blockquote { margin:18px 0 14px; font-size: clamp(22px, 4.2vw, 36px); line-height:1.25; font-weight:650; letter-spacing:.15px; }
+    blockquote::before, blockquote::after { content:"\201C"; color:#94a3b8; margin:0 .2ch; }
+    blockquote::after { content:"\201D"; }
+    .author { color:#a7b0be; font-size:14px; margin: 2px 0 22px; }
+    .row { display:flex; gap:10px; flex-wrap:wrap; }
+    button {
+      --alpha: .12; appearance:none; border:1px solid rgba(255,255,255,.12); color:var(--text);
+      background: rgba(255,255,255,var(--alpha)); padding:10px 14px; border-radius:12px; cursor:pointer; font-weight:600;
+      transition: transform .06s ease, background .2s ease, border-color .2s ease; 
+    }
+    button:hover { --alpha:.18; }
+    button:active { transform: translateY(1px) scale(.99); }
+    .ghost { --alpha:.06; }
+    .muted { color: var(--muted); font-size:12px; margin-left:auto; }
+    .hidden { display:none; }
+    .footer { display:flex; align-items:center; gap:12px; color:#94a3b8; font-size:12px; }
+    a, a:visited { color:#cbd5e1; }
+  </style>
+</head>
+<body>
+  <main class="card" role="main">
+    <div class="header">
+      <h1>Zufalls‑Motivationsspruch</h1>
+      <div class="time" id="time"></div>
+    </div>
+
+    <blockquote id="quote">Lade Spruch…</blockquote>
+    <div class="author" id="author"></div>
+
+    <div class="row">
+      <button id="btn-copy" class="ghost" aria-label="Spruch in die Zwischenablage kopieren">Kopieren</button>
+      <span class="muted" id="status" role="status" aria-live="polite"></span>
+    </div>
+
+  </main>
+
+  <script>
+    // === 1) Deine Sammlung hier pflegen (Text oder "Text — Autor") ===
+const QUOTES = [
+  "I remember how we are just meet for a few days and you were already showing me your diary in the sports bar. I feel like nowadays you rarely meet someone how write a diary (especially such a cool and artistic diary as yours) and it is even rarer that person show it to someone she just meets. At this moment I was thinking: how cool and open is this girl! Keep being as open und positive as you are! :)",
+
+  "I remember when I saw you the first time with this awesome red dress (btw the second most beautiful outfit I saw on the ship in my opinion). I directly feel the urge to ask you out for a dance. This is one of the moments I will never regret! Because I not only learned the amazing octopus dance move, I also got such a wonderful new person in my live :)",
+
+  "I remember talking with Markus about which girl is the coolest on the cruise. I said to him, this Lili girl is really cool and has the most fun and positive vibe. But she seems every young like 15. One day later I meet you again und you said you have to lean Fourier Transformations. At this moment I noticed: Wait a moment this girl is not 15, and even better she also loves maths and engineering! Perhaps there could be even more then friendship. (Since, you already have a boyfriend, just ignore the last part. That was just how I felt at this moment. The main message is, the already coolest girl on the ship in this moment just got even cooler in my opinion)",
+
+  "I feel like every time a DJ is nearby you are directly going towards him and started a conversation about DJing. Which is just one example of how passionate you are! I feel like you getting as obsessed with the things you love as I do which is one of the greatest superpowers you can have in my opinion! I hope you find the right environment where you can unfold your full potential! And if I can help you somehow, I just one call (and 594 km) away ;)",
+
+  "Even if I sometimes would like to have more time with you (on the cruse as also now in person), I really impressed by your comment and willpower! I have no doubt that you will succeed on the goals you set! But currently it feels like you often have to set things you love (DJing, visiting your favourite German person, etc.) by side. I hope in future you find ways were you don't have to choose and you can combine your goals and what you love! Because we are only living once and in my opinion, we are allowed to want and have it all! :) Extra: And something I also have to learn is that just because I am working all day, it doesn't always mean I am productive. Hard work is a big part of success, but not everything. At least that's my opinion. Hope it helps you and feel free to call me if you disagree ;)",
+
+  "I really like your passion for technology and mechanical engineering. I remember when I was visiting you in French and you were showing me a video of a metal jet turbine toy with your eyes wide open and saying 'this is so cool'! :D People with such passion and happy attitude are rare, so keep this passion and happinesses in you! :)",
+
+  "I remember talking to you about your future goals. One of them is to become a rocket scientist to be there were the news tech is invented (which is really cool). This passion about technology is something I (with my life goal of becoming an inventor) also share! I hope in future we will find more time to talk about technology and can learn and inspire each other even more! :D",
+
+  "I really like how artistic you are! Your drawing (especially those with frogs) are awesome! As was 18 I was also drawing a lot (especially dragons), but because of more and more busy schedules I sadly lost this habit. But with your diary you kind of reignited this passion (even if for now I only have time to draw stick figures art). Thanks for that! And feel free to show me more drawings and pages of your diary! I really love them :D",
+
+  "I like how I can all was count on you! Even if it is hard, you are honest with me! And if I need a friend, you are there and listen! I very grateful you got in my live! :)",
+
+  "I really like how we inspire each other. With ideas like, dancing frog robots, the ProstOmat and even this 'you are never alone'-Keychain. Looking forward of a future where we have a lot more fun ideas like those and bring them step by step to live! :D",
+
+  "I really impressed by your excellent English skills and all the cruises and travel you already did! I wish you a lot more of them with lots of adventures. And I hope our paths cross again so we will be part of each other’s adventures :D",
+
+  "I remember how you showed my your YouTube channel the first time. I immediately did subscribe and was really impressed! For me one of my big goals is to invent stuff and showing/teaching those things to others on a platform like YouTube. However, I most recently didn't even have a YouTube channel. And you have already started one with 16 and animated multiple episodes! I directly noticed you are a maker and not an 'NPC'. You are someone how wants more from live and try new things to get there!",
+
+  "I remember when we first started texting, you were always writing good night text. At first, I was not used to that, but it was very cute. And then you did even top this and sent me some good night music: 'Here is some nice relaxing music for you :) ✨' https://music.apple.com/us/album/dreams/1623453758?l=fr-FR This was one of the cutest things someone ever did to me, thx! :) Keep being so kind and positive! PS: If you read this text, it would be awesome if you could send me a good night message again! :)",
+
+  "I remember our second meeting on the ship very well! You were watching the dance party with your parents at the second floor. I was just walking by and saying: 'Hi Lili, what are you doing here? The party is on the first floor!' You: 'I am too exhausted' Me: 'Okay, too bad you're missing out.' Then I left and did go dancing. I first thought perhaps she is not as fun as I first thought. But this totally changes when I turned around 5 min later and saw that you did follow me and just started perfoming the amazing octopus dance. Somehow this did make me feel so happy! :)",
+
+  "I remember our last full day on the cruise very well. You wanted to make a DJ session, but directly in front of the stage ware some older people playing cards and you therefore were not allowed to play. So, instead we showed each other some holiday pictures and having a good time. Then your parents wanted to go eat. So, you said goodbye and went to the elevator. I was also just about to leave as well, as you came back and asked me if I wanted to join for dinner? (This was so cute from you!) Theoretically I did just eat bevor and was not hungry at all. But I did really like you and wanted to spend the rest time of the cruise with you and your family. A decision I didn't regret at all :)",
+
+  "I remember on the last party night on the cruise, you sadly were not there. You said you don´t have time, but I somehow was still hoping you would and we could dance together again. Nevertheless, on the next morning I had the luck to see you again and we were giving each other a very amazing hug. The I was joking around and Saying: Lili can I put you in my backpack? Und started to pretend to be my backpack. It was very funny and cute :) The rest of the day I was a bit daydreamy (I might had a little crush on you) And even if it was just joking around, I still wondering how our lives would be if wouldn’t live so far away from each other"
+];
+    // === 2) Keine Wiederholungen bis alle durch sind – Shuffle‑Beutel in localStorage ===
+    const STORAGE_KEY = 'motivate.shuffleBag.v1';
+
+    function getShuffleBag(size) {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        try {
+          const obj = JSON.parse(raw);
+          if (Array.isArray(obj.bag) && typeof obj.i === 'number' && obj.size === size) return obj;
+        } catch {}
+      }
+      // Neu erzeugen: 0..size-1 mischen (Fisher‑Yates)
+      const bag = Array.from({length: size}, (_, i) => i);
+      for (let i = bag.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [bag[i], bag[j]] = [bag[j], bag[i]];
+      }
+      const obj = { bag, i: 0, size };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+      return obj;
+    }
+
+    function drawIndex(size) {
+      let state = getShuffleBag(size);
+      if (state.i >= state.bag.length) {
+        // Alles gezeigt → neu mischen
+        localStorage.removeItem(STORAGE_KEY);
+        state = getShuffleBag(size);
+      }
+      const idx = state.bag[state.i++];
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      return idx;
+    }
+
+    // === 3) Rendering ===
+    function splitQuote(q) {
+      // Trenne bei — oder - oder \u2014; rechts davon als Autor, wenn sinnvoll
+      const dash = /(\s[\u2014\u2013\-]\s)|\s—\s/;
+      const parts = q.split(dash);
+      if (parts.length >= 3) {
+        const text = (parts[0] || '').trim();
+        const author = (q.slice(text.length).replace(/^\s[\u2014\u2013\-]\s/, '')).trim();
+        return { text, author };
+      }
+      return { text: q, author: '' };
+    }
+
+    function renderRandomQuote() {
+      if (!QUOTES.length) return;
+      const i = drawIndex(QUOTES.length);
+      const { text, author } = splitQuote(QUOTES[i]);
+      document.getElementById('quote').textContent = text;
+      const a = document.getElementById('author');
+      a.textContent = author ? '— ' + author : '';
+    }
+
+    // === 4) UX: Kopieren, Zeitstempel, Button ===
+    async function copyQuote() {
+      const text = document.getElementById('quote').textContent;
+      const author = document.getElementById('author').textContent;
+      const clip = author ? `${text} ${author}` : text;
+      try {
+        await navigator.clipboard.writeText(clip);
+        setStatus('Kopiert.');
+      } catch {
+        setStatus('Konnte nicht kopieren.');
+      }
+    }
+
+    function setStatus(msg) {
+      const s = document.getElementById('status');
+      s.textContent = msg;
+      clearTimeout(setStatus._t);
+      setStatus._t = setTimeout(() => s.textContent = '', 1800);
+    }
+
+    function setTime() {
+      const now = new Date();
+      const opts = { hour: '2-digit', minute: '2-digit' };
+      document.getElementById('time').textContent = now.toLocaleTimeString(undefined, opts);
+    }
+
+    // Init
+    document.getElementById('btn-copy').addEventListener('click', copyQuote);
+    setTime();
+    setInterval(setTime, 30_000);
+    renderRandomQuote();
+  </script>
+</body>
+</html>
