@@ -1,0 +1,43 @@
+:root { --bg:#0f172a; --card:#111827; --text:#e5e7eb; --muted:#9ca3af; --ring:rgba(255,255,255,.12); }
+html, body { height:100%; }
+body {
+  margin:0; display:flex; align-items:center; justify-content:center; min-height:100vh;
+  background: radial-gradient(1200px 800px at 70% 10%, #1f2937 0%, var(--bg) 60%); color:var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans";
+}
+.card {
+  width:min(960px, 94vw); border-radius:20px; overflow:hidden;
+  background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.08); backdrop-filter: blur(8px);
+}
+.header, .footer, .content { padding:22px 24px; }
+.header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+h1 { font-size:18px; font-weight:600; margin:0; color:#cbd5e1; letter-spacing:.2px; }
+.time { font-size:12px; color:var(--muted); }
+.hero { margin:0; position:relative; background:#0b1020; }
+.hero > #heroMedia > * {
+  width:100%; height: clamp(220px, 38vw, 360px); object-fit: cover; display:block;
+}
+.hero figcaption {
+  position:absolute; right:10px; bottom:10px; font-size:12px; color:#cbd5e1; opacity:.85; background:rgba(0,0,0,.25);
+  padding:6px 8px; border-radius:10px; backdrop-filter: blur(4px);
+}
+blockquote { margin:0; }
+.quote p {
+  margin: 0 0 12px 0;
+  font-size: clamp(18px, 2.6vw, 22px); line-height:1.5; letter-spacing:.15px;
+}
+.quote p:last-child { margin-bottom: 0; }
+.author { color:#a7b0be; font-size:14px; margin-top:16px; }
+.row { display:flex; gap:10px; flex-wrap:wrap; }
+button {
+  --alpha:.10; appearance:none; border:1px solid var(--ring); color:var(--text);
+  background: rgba(255,255,255,var(--alpha)); padding:10px 14px; border-radius:12px; cursor:pointer; font-weight:600;
+  transition: transform .06s ease, background .2s ease, border-color .2s ease;
+}
+button:hover { --alpha:.16; }
+button:active { transform: translateY(1px) scale(.99); }
+.ghost { --alpha:.06; }
+.muted { color: var(--muted); font-size:12px; margin-left:auto; }
+.hidden { display: none; }

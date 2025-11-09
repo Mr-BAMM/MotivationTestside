@@ -1,0 +1,52 @@
+{
+  "items": [
+    {
+      "image": {
+        "src": "./assets/img/mountains.jpg",
+        "alt": "Berge im Morgenlicht",
+        "credit": "Foto: Unsplash / Platzhalter"
+      },
+      "text": [
+        "Mach’s einfach. Einfach machen.",
+        "Warte nicht auf perfekte Bedingungen. Momentum entsteht beim Tun."
+      ],
+      "author": "Unbekannt",
+      "video": {
+        "src": "./assets/media/mountains.mp4",
+        "poster": "./assets/img/mountains.jpg",
+        "loop": true
+      },
+      "audio": {
+        "src": "./assets/media/ambient.mp3",
+        "loop": true
+      }
+    },
+    {
+      "image": {
+        "src": "./assets/img/forest.jpg",
+        "alt": "Waldpfad mit diffusem Licht"
+      },
+      "text": [
+        "Der beste Zeitpunkt war gestern. Der zweitbeste ist jetzt.",
+        "Ein kleiner Schritt heute schlägt den großen Plan ohne Umsetzung."
+      ],
+      "author": ""
+    },
+    {
+      "image": {
+        "src": "./assets/img/city.jpg",
+        "alt": "Stadt bei Nacht mit Lichtspuren",
+        "credit": "Foto: Pexels / Platzhalter"
+      },
+      "text": [
+        "Fokus schlägt Talent.",
+        "Schneide das Rauschen raus. Eine Sache, konsequent, täglich."
+      ],
+      "author": "Mentor-Notiz",
+      "audio": {
+        "src": "./assets/media/city-ambience.mp3",
+        "loop": true
+      }
+    }
+  ]
+}

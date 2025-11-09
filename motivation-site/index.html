@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>You are not allone!</title>
+  <link rel="preload" href="/css/style.css" as="style">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <main class="card" role="main">
+    <div class="header">
+      <h1>Thoughts that hopfully make you happy!</h1>
+      <div class="time" id="time" aria-live="polite"></div>
+    </div>
+
+    <figure class="hero" id="hero" aria-hidden="true">
+      <div id="heroMedia"></div>
+      <figcaption id="heroCaption" class="hidden"></figcaption>
+    </figure>
+
+    <section class="content">
+      <blockquote class="quote" id="quote" aria-live="polite"></blockquote>
+      <div class="author" id="author"></div>
+    </section>
+
+    <div class="footer">
+      <div class="row">
+        <button id="btn-copy" class="ghost" aria-label="Spruch in die Zwischenablage kopieren">Kopieren</button>
+        <button id="btn-next" aria-label="Neuen Spruch anzeigen">Neuer Spruch</button>
+        <span class="muted" id="status" role="status" aria-live="polite"></span>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { initApp } from './js/app.js';
+    initApp();
+  </script>
+</body>
+</html>
