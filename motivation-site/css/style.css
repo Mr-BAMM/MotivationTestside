@@ -1,28 +1,34 @@
 :root {
-  --bg:#b91c1c;           /* Rot (Tailwind red-700 als solide Basis) */
+  --bg:#b91c1c;           /* roter Hintergrund */
   --card:#111827;
   --text:#e5e7eb;
-  --muted:#fca5a5;        /* heller Rot-Ton für Sekundärtext auf Rot */
+  --muted:#fca5a5;
   --ring:rgba(255,255,255,.18);
   --seal-h:72px;          /* Höhe der Siegel-Leiste unten */
+
+  /* Dynamische Fit-Variablen (werden per JS angepasst) */
+  --fs-quote: 20px;       /* Basisschrift für Zitatabsätze */
+  --fs-author: 14px;      /* Autor */
+  --fs-h1: 18px;          /* Überschrift */
+  --hero-max-h: 360px;    /* maximale Bild/Video-Höhe */
+  --hero-min-h: 160px;    /* untere Grenze für Bild/Video */
 }
 
-/* Seite layouten: Scrollbar immer sichtbar, Inhalt oben starten */
 html, body { height: 100%; }
 html { scrollbar-gutter: stable both-edges; }
 body {
   margin:0;
   display:grid;
-  place-content: start center;     /* oben zentriert */
+  place-content: start center;
   min-height:100dvh;
   background: var(--bg);
   color:var(--text);
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans";
-  padding: 24px 0 calc(var(--seal-h) + 24px); /* Platz für das Siegel unten */
-  overflow-y: auto;               /* explizit: Seite ist scroll-fähig */
+  padding: 16px 0 calc(var(--seal-h) + 16px);  /* Platz für Siegel unten */
+  overflow: hidden;        /* keine Scrollbar – wir fitten den Inhalt */
 }
 
-/* Card/Layout */
+/* Card/Layout: bekommt eine max. Höhe = (Viewport - Ränder - Siegel) */
 .card {
   width:min(960px, 94vw);
   border-radius:20px;
@@ -31,16 +37,20 @@ body {
   box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
   border:1px solid rgba(255,255,255,0.12);
   backdrop-filter: blur(8px);
+
+  /* Damit die Karte selbst nicht scrollt: wir passen Inhalte an */
+  max-height: calc(100dvh - var(--seal-h) - 32px);
 }
-.header, .footer, .content { padding:22px 24px; }
+
+.header, .footer, .content { padding:18px 16px; }
 .header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
-h1 { font-size:18px; font-weight:600; margin:0; color:#fde68a; letter-spacing:.2px; } /* gelblicher Akzent */
+h1 { font-size: var(--fs-h1); font-weight:600; margin:0; color:#fde68a; letter-spacing:.2px; }
 .time { font-size:12px; color:var(--muted); }
 
 /* HERO (Letterboxing: nichts wird beschnitten) */
 .hero {
   margin:0; position:relative; background:#0b1020;
-  min-height: clamp(220px, 38vw, 360px);
+  min-height: var(--hero-min-h);
 }
 #heroMedia {
   display:flex; align-items:center; justify-content:center;
@@ -48,7 +58,7 @@ h1 { font-size:18px; font-weight:600; margin:0; color:#fde68a; letter-spacing:.2
 .hero #heroMedia > * {
   width:100%;
   height:auto;
-  max-height: clamp(220px, 38vw, 360px);
+  max-height: min(var(--hero-max-h), calc(38vw)); /* wird per JS nach unten korrigiert */
   object-fit: contain;   /* nicht zuschneiden */
   display:block;
   background:#0b1020;
@@ -62,11 +72,12 @@ h1 { font-size:18px; font-weight:600; margin:0; color:#fde68a; letter-spacing:.2
 /* Textbereich */
 blockquote { margin:0; }
 .quote p {
-  margin: 0 0 12px 0;
-  font-size: clamp(18px, 2.6vw, 22px); line-height:1.5; letter-spacing:.15px;
+  margin: 0 0 10px 0;
+  font-size: var(--fs-quote);  /* dynamisch */
+  line-height:1.45; letter-spacing:.15px;
 }
 .quote p:last-child { margin-bottom: 0; }
-.author { color:#ffe4e6; font-size:14px; margin-top:16px; }
+.author { color:#ffe4e6; font-size: var(--fs-author); margin-top:12px; }
 
 /* Footer / Buttons */
 .row { display:flex; gap:10px; flex-wrap:wrap; }
@@ -82,50 +93,34 @@ button:active { transform: translateY(1px) scale(.99); }
 
 .hidden { display: none; }
 
-/* Fixe Siegel-Leiste unten */
+/* Fixe Siegel-Leiste unten (wie zuvor) */
 .seal-bar {
   position: fixed;
   left: 0; right: 0; bottom: 0;
   height: var(--seal-h);
   display: grid;
   place-items: center;
-  background: linear-gradient(180deg, transparent, rgba(0,0,0,0.20)); /* dezenter Fade */
-  pointer-events: none;                 /* klicks gehen durch – außer aufs Bild */
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,0.20));
+  pointer-events: none;
   z-index: 50;
 }
 .seal-bar img {
   height: calc(var(--seal-h) - 16px);
   width: auto;
   filter: drop-shadow(0 2px 8px rgba(0,0,0,.35));
-  pointer-events: auto;                 /* Bild bleibt klickbar, falls verlinkt */
+  pointer-events: auto;
   user-select: none;
 }
 
-/* Scrollbar-Styling (Cross-Browser so gut es geht) */
-/* Chromium/WebKit */
-*::-webkit-scrollbar {
-  width: 12px; height: 12px;
-}
-*::-webkit-scrollbar-track {
-  background: rgba(0,0,0,0.12);
-}
-*::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.35);
-  border-radius: 10px;
-  border: 3px solid rgba(0,0,0,0.12);
-}
-*::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.55);
-}
-
-/* Firefox */
-* {
-  scrollbar-width: thin;                         /* auto | thin | none */
-  scrollbar-color: rgba(255,255,255,0.55) rgba(0,0,0,0.12);
-}
-
-/* Kleine Responsiveness-Feinheiten */
+/* Mobile-Feinheiten */
 @media (max-width: 480px) {
-  :root { --seal-h: 60px; }
-  .header, .footer, .content { padding:18px 16px; }
+  :root {
+    --seal-h: 60px;
+    --fs-h1: 16px;
+    --hero-min-h: 140px;
+    /* Startwerte kleiner – wird ggf. weiter runter geregelt */
+    --fs-quote: 18px;
+    --fs-author: 13px;
+  }
+  .header, .footer, .content { padding:16px 12px; }
 }
