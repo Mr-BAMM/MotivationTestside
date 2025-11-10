@@ -21,6 +21,7 @@
 
   /* Siegel: fixe Größe und vertikale Reserve (weil im Flow nicht nötig, aber für Fit hilfreich) */
   --seal-w: 160px;      /* Desktop-Breite */
+  
 }
 
 html,body{height:100%}
@@ -144,7 +145,7 @@ button:active{transform:translateY(1px) scale(.99)}
     --hero-min-h:120px;
     --hero-max-h:320px;
 
-    --seal-w: 120px;      /* gleiche fixe Größe – nur mobiler Wert */
+    --seal-w: 40px;      /* gleiche fixe Größe – nur mobiler Wert */
   }
   .header,.footer,.content{padding:16px 10px}
 }
