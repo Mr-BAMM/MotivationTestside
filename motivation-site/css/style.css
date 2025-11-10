@@ -1,27 +1,26 @@
 :root{
   /* Ruhige, wertschätzende Palette */
-  --bg-top:#0f172a;         /* slate-900 */
-  --bg-mid:#111827;         /* near slate-900 */
-  --bg-bot:#1e293b;         /* slate-800 */
-  --card:#0b1220;           /* tiefer, kühler Untergrund */
-  --text:#e5e7eb;           /* zinc-200 */
-  --muted:#94a3b8;          /* slate-400 */
+  --bg-top:#0f172a;     /* slate-900 */
+  --bg-mid:#111827;
+  --bg-bot:#1e293b;     /* slate-800 */
+  --card:#0b1220;
+  --text:#e5e7eb;       /* zinc-200 */
+  --muted:#94a3b8;      /* slate-400 */
   --ring:rgba(255,255,255,.16);
 
-  /* sichtbare Höhe (per JS gesetzt, mit Fallbacks) */
+  /* sichtbare Höhe (per JS gesetzt; Fallbacks aktiv) */
   --vh:1svh;
   --vhpx:100dvh;
 
-  /* Fit-Variablen – werden bei Bedarf verkleinert */
+  /* Fit-Variablen – werden bei Bedarf per JS kleiner gestellt */
   --fs-quote:20px;
   --fs-author:14px;
   --fs-h1:18px;
   --hero-max-h:360px;
   --hero-min-h:140px;
 
-  /* Siegel unten rechts (Platz und Größe) */
-  --seal-space: 110px;   /* Desktop: freier Platz im Content unten */
-  --seal-w: 160px;       /* Siegelbreite Desktop */
+  /* Siegel: fixe Größe und vertikale Reserve (weil im Flow nicht nötig, aber für Fit hilfreich) */
+  --seal-w: 160px;      /* Desktop-Breite */
 }
 
 html,body{height:100%}
@@ -32,7 +31,7 @@ body{
   display:grid;
   place-content:start center;
   min-height:calc(100 * var(--vh));
-  /* Ruhiger Hintergrund: weicher Verlauf statt Vollrot */
+  /* ruhiger Hintergrund */
   background:
     radial-gradient(1200px 800px at 70% 10%, var(--bg-bot) 0%, var(--bg-top) 65%),
     linear-gradient(180deg, var(--bg-mid), var(--bg-top));
@@ -40,13 +39,14 @@ body{
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans";
   padding-top:max(16px, env(safe-area-inset-top));
   padding-bottom:max(16px, env(safe-area-inset-bottom));
-  overflow:hidden; /* kein Scrollen – Fit-Logik skaliert Inhalte */
+  overflow:hidden; /* kein Scrollen – JS passt Inhalte an */
 }
 
-/* Karte */
+/* Karte füllt sichtbaren Bereich (ohne Safe-Areas) */
 .card{
   width:min(960px,94vw);
-  border-radius:20px; overflow:hidden;
+  border-radius:20px;
+  overflow:hidden;
   background:
     linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.025)),
     var(--card);
@@ -56,26 +56,36 @@ body{
   border:1px solid rgba(255,255,255,.10);
   backdrop-filter:blur(8px);
   max-height: calc(var(--vhpx) - max(16px, env(safe-area-inset-top)) - max(16px, env(safe-area-inset-bottom)));
-  position: relative; /* Anker für Siegel */
+
+  /* Wichtig: Flow steuern – Siegel unten, nichts überlappt */
+  display:flex;
+  flex-direction:column;
 }
 
 .header,.footer,.content{padding:18px 12px}
-.header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.header{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
 h1{
-  font-size:var(--fs-h1); font-weight:700; margin:0;
-  color:#f1c453;            /* sanfter Amber-Akzent */
+  font-size:var(--fs-h1);
+  font-weight:700; margin:0;
+  color:#f1c453;           /* sanfter Amber-Akzent */
   letter-spacing:.2px;
 }
-.time{font-size:12px;color:var(--muted)}
+.time{font-size:12px; color:var(--muted)}
 
-/* MEDIA: Letterboxing – nichts wird beschnitten */
-.hero{margin:0;position:relative;background:#0b1020;min-height:var(--hero-min-h)}
-#heroMedia{display:flex;align-items:center;justify-content:center}
+/* MEDIA: Letterboxing – nichts wird beschnitten, Bild schrumpft bei Bedarf */
+.hero{
+  margin:0; position:relative; background:#0b1020; min-height:var(--hero-min-h);
+}
+#heroMedia{
+  display:flex; align-items:center; justify-content:center;
+}
 .hero #heroMedia > *{
   width:100%; height:auto; display:block;
   max-height:min(var(--hero-max-h), 38vw);
   object-fit:contain;
-  background:#0b1020; /* dunkler Rahmen statt Schwarz */
+  background:#0b1020;
 }
 .hero figcaption{
   position:absolute; right:10px; bottom:10px; font-size:12px;
@@ -93,15 +103,25 @@ blockquote{margin:0}
 }
 .quote p:last-child{margin-bottom:0}
 .author{
-  color:#c7d2fe;            /* sanftes Indigo für Wertschätzung */
+  color:#c7d2fe;          /* sanftes Indigo */
   font-size:var(--fs-author);
   margin-top:12px;
 }
 
-/* Platz für Siegel reservieren */
-.content{ padding-bottom: var(--seal-space); }
+/* Siegel: IM FLOW, unterhalb des Textes – niemals überdecken */
+.seal{
+  margin-top:auto;                  /* schiebt Siegel an das untere Kartenende */
+  display:flex; justify-content:flex-end;
+  padding: 8px 12px 12px;           /* etwas Luft zum Rand */
+}
+.seal img{
+  width: var(--seal-w);             /* feste Größe */
+  height: auto;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.35));
+  user-select: none;
+}
 
-/* Buttons (falls vorhanden) – neutral, unaufdringlich */
+/* (Optional) Footer/Buttons – unaufdringlich, falls vorhanden */
 .row{display:flex;gap:10px;flex-wrap:wrap}
 button{
   --alpha:.10; appearance:none; border:1px solid var(--ring); color:var(--text);
@@ -115,27 +135,16 @@ button:active{transform:translateY(1px) scale(.99)}
 .muted{color: var(--muted); font-size:12px; margin-left:auto}
 .hidden{display:none}
 
-/* Siegel unten rechts, absolut in der Karte */
-.seal{
-  position:absolute; right:12px; bottom:12px; z-index:2;
-  pointer-events:none; /* optional auf auto setzen, wenn klickbar */
-}
-.seal img{
-  width: var(--seal-w); height:auto;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,.35));
-  user-select:none; pointer-events:auto;
-}
-
-/* Mobile: dezenter, kompakter */
-@media (max-width:200px){
+/* Mobile-Anpassungen: etwas kompakter + kleineres Siegel */
+@media (max-width:480px){
   :root{
     --fs-h1:16px;
     --fs-quote:18px;
     --fs-author:13px;
     --hero-min-h:120px;
     --hero-max-h:320px;
-    --seal-w: 100px;
-    --seal-space: 86px;
+
+    --seal-w: 120px;      /* gleiche fixe Größe – nur mobiler Wert */
   }
   .header,.footer,.content{padding:16px 10px}
 }
