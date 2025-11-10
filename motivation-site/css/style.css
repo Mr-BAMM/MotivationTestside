@@ -3,8 +3,7 @@
   --card:#111827;
   --text:#e5e7eb;
   --muted:#fca5a5;
-  --ring:rgba(255,255,255,.18);
-  --seal-h:72px;          /* Höhe der Siegel-Leiste unten */
+  --ring:rgba(44, 22, 22, 0.651);
 
   /* Dynamische Fit-Variablen (werden per JS angepasst) */
   --fs-quote: 20px;       /* Basisschrift für Zitatabsätze */
@@ -93,24 +92,23 @@ button:active { transform: translateY(1px) scale(.99); }
 
 .hidden { display: none; }
 
-/* Fixe Siegel-Leiste unten (wie zuvor) */
-.seal-bar {
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
-  height: var(--seal-h);
-  display: grid;
-  place-items: center;
-  background: linear-gradient(180deg, transparent, rgba(0,0,0,0.20));
-  pointer-events: none;
-  z-index: 50;
+.seal {
+  display: flex;
+  justify-content: flex-end;  /* rechtsbündig */
+  padding: 8px 12px 16px;     /* etwas Luft zum Rand */
 }
-.seal-bar img {
-  height: calc(var(--seal-h) - 16px);
-  width: auto;
+
+.seal img {
+  max-width: 28%;   /* Desktop: nimmt max. ~ein Drittel Breite */
+  height: auto;
   filter: drop-shadow(0 2px 8px rgba(0,0,0,.35));
-  pointer-events: auto;
   user-select: none;
 }
+
+/* Mobile: Siegel etwas größer, aber weiterhin rechts */
+@media (max-width: 480px) {
+  .seal { padding: 8px 10px 12px; }
+  .seal img { max-width: 40%; }
 
 /* Mobile-Feinheiten */
 @media (max-width: 480px) {
