@@ -1,124 +1,141 @@
-:root {
-  --bg:#b91c1c;           /* roter Hintergrund */
-  --card:#111827;
-  --text:#e5e7eb;
-  --muted:#fca5a5;
-  --ring:rgba(44, 22, 22, 0.651);
+:root{
+  /* Ruhige, wertschätzende Palette */
+  --bg-top:#0f172a;         /* slate-900 */
+  --bg-mid:#111827;         /* near slate-900 */
+  --bg-bot:#1e293b;         /* slate-800 */
+  --card:#0b1220;           /* tiefer, kühler Untergrund */
+  --text:#e5e7eb;           /* zinc-200 */
+  --muted:#94a3b8;          /* slate-400 */
+  --ring:rgba(255,255,255,.16);
 
-  /* Dynamische Fit-Variablen (werden per JS angepasst) */
-  --fs-quote: 20px;       /* Basisschrift für Zitatabsätze */
-  --fs-author: 14px;      /* Autor */
-  --fs-h1: 18px;          /* Überschrift */
-  --hero-max-h: 360px;    /* maximale Bild/Video-Höhe */
-  --hero-min-h: 160px;    /* untere Grenze für Bild/Video */
+  /* sichtbare Höhe (per JS gesetzt, mit Fallbacks) */
+  --vh:1svh;
+  --vhpx:100dvh;
+
+  /* Fit-Variablen – werden bei Bedarf verkleinert */
+  --fs-quote:20px;
+  --fs-author:14px;
+  --fs-h1:18px;
+  --hero-max-h:360px;
+  --hero-min-h:140px;
+
+  /* Siegel unten rechts (Platz und Größe) */
+  --seal-space: 110px;   /* Desktop: freier Platz im Content unten */
+  --seal-w: 160px;       /* Siegelbreite Desktop */
 }
 
-html, body { height: 100%; }
-html { scrollbar-gutter: stable both-edges; }
-body {
+html,body{height:100%}
+html{scrollbar-gutter:stable both-edges}
+
+body{
   margin:0;
   display:grid;
-  place-content: start center;
-  min-height:100dvh;
-  background: var(--bg);
+  place-content:start center;
+  min-height:calc(100 * var(--vh));
+  /* Ruhiger Hintergrund: weicher Verlauf statt Vollrot */
+  background:
+    radial-gradient(1200px 800px at 70% 10%, var(--bg-bot) 0%, var(--bg-top) 65%),
+    linear-gradient(180deg, var(--bg-mid), var(--bg-top));
   color:var(--text);
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans";
-  padding: 16px 0 calc(var(--seal-h) + 16px);  /* Platz für Siegel unten */
-  overflow: hidden;        /* keine Scrollbar – wir fitten den Inhalt */
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans";
+  padding-top:max(16px, env(safe-area-inset-top));
+  padding-bottom:max(16px, env(safe-area-inset-bottom));
+  overflow:hidden; /* kein Scrollen – Fit-Logik skaliert Inhalte */
 }
 
-/* Card/Layout: bekommt eine max. Höhe = (Viewport - Ränder - Siegel) */
-.card {
-  width:min(960px, 94vw);
-  border-radius:20px;
-  overflow:hidden;
-  background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter: blur(8px);
-
-  /* Damit die Karte selbst nicht scrollt: wir passen Inhalte an */
-  max-height: calc(100dvh - var(--seal-h) - 32px);
+/* Karte */
+.card{
+  width:min(960px,94vw);
+  border-radius:20px; overflow:hidden;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.025)),
+    var(--card);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.10);
+  backdrop-filter:blur(8px);
+  max-height: calc(var(--vhpx) - max(16px, env(safe-area-inset-top)) - max(16px, env(safe-area-inset-bottom)));
+  position: relative; /* Anker für Siegel */
 }
 
-.header, .footer, .content { padding:18px 16px; }
-.header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
-h1 { font-size: var(--fs-h1); font-weight:600; margin:0; color:#fde68a; letter-spacing:.2px; }
-.time { font-size:12px; color:var(--muted); }
+.header,.footer,.content{padding:18px 12px}
+.header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+h1{
+  font-size:var(--fs-h1); font-weight:700; margin:0;
+  color:#f1c453;            /* sanfter Amber-Akzent */
+  letter-spacing:.2px;
+}
+.time{font-size:12px;color:var(--muted)}
 
-/* HERO (Letterboxing: nichts wird beschnitten) */
-.hero {
-  margin:0; position:relative; background:#0b1020;
-  min-height: var(--hero-min-h);
+/* MEDIA: Letterboxing – nichts wird beschnitten */
+.hero{margin:0;position:relative;background:#0b1020;min-height:var(--hero-min-h)}
+#heroMedia{display:flex;align-items:center;justify-content:center}
+.hero #heroMedia > *{
+  width:100%; height:auto; display:block;
+  max-height:min(var(--hero-max-h), 38vw);
+  object-fit:contain;
+  background:#0b1020; /* dunkler Rahmen statt Schwarz */
 }
-#heroMedia {
-  display:flex; align-items:center; justify-content:center;
-}
-.hero #heroMedia > * {
-  width:100%;
-  height:auto;
-  max-height: min(var(--hero-max-h), calc(38vw)); /* wird per JS nach unten korrigiert */
-  object-fit: contain;   /* nicht zuschneiden */
-  display:block;
-  background:#0b1020;
-}
-
-.hero figcaption {
-  position:absolute; right:10px; bottom:10px; font-size:12px; color:#cbd5e1; opacity:.85; background:rgba(0,0,0,.25);
-  padding:6px 8px; border-radius:10px; backdrop-filter: blur(4px);
+.hero figcaption{
+  position:absolute; right:10px; bottom:10px; font-size:12px;
+  color:#cbd5e1; opacity:.9; background:rgba(0,0,0,.25);
+  padding:6px 8px; border-radius:10px; backdrop-filter:blur(4px);
 }
 
-/* Textbereich */
-blockquote { margin:0; }
-.quote p {
-  margin: 0 0 10px 0;
-  font-size: var(--fs-quote);  /* dynamisch */
-  line-height:1.45; letter-spacing:.15px;
+/* Text */
+blockquote{margin:0}
+.quote p{
+  margin:0 0 10px 0;
+  font-size:var(--fs-quote);
+  line-height:1.5; letter-spacing:.15px;
+  color:var(--text);
 }
-.quote p:last-child { margin-bottom: 0; }
-.author { color:#ffe4e6; font-size: var(--fs-author); margin-top:12px; }
+.quote p:last-child{margin-bottom:0}
+.author{
+  color:#c7d2fe;            /* sanftes Indigo für Wertschätzung */
+  font-size:var(--fs-author);
+  margin-top:12px;
+}
 
-/* Footer / Buttons */
-.row { display:flex; gap:10px; flex-wrap:wrap; }
-button {
-  --alpha:.12; appearance:none; border:1px solid var(--ring); color:var(--text);
-  background: rgba(255,255,255,var(--alpha)); padding:10px 14px; border-radius:12px; cursor:pointer; font-weight:600;
+/* Platz für Siegel reservieren */
+.content{ padding-bottom: var(--seal-space); }
+
+/* Buttons (falls vorhanden) – neutral, unaufdringlich */
+.row{display:flex;gap:10px;flex-wrap:wrap}
+button{
+  --alpha:.10; appearance:none; border:1px solid var(--ring); color:var(--text);
+  background: rgba(255,255,255,var(--alpha));
+  padding:10px 14px; border-radius:12px; cursor:pointer; font-weight:600;
   transition: transform .06s ease, background .2s ease, border-color .2s ease;
 }
-button:hover { --alpha:.18; }
-button:active { transform: translateY(1px) scale(.99); }
-.ghost { --alpha:.08; }
-.muted { color: var(--muted); font-size:12px; margin-left:auto; }
+button:hover{--alpha:.15}
+button:active{transform:translateY(1px) scale(.99)}
+.ghost{--alpha:.06}
+.muted{color: var(--muted); font-size:12px; margin-left:auto}
+.hidden{display:none}
 
-.hidden { display: none; }
-
-.seal {
-  display: flex;
-  justify-content: flex-end;  /* rechtsbündig */
-  padding: 8px 12px 16px;     /* etwas Luft zum Rand */
+/* Siegel unten rechts, absolut in der Karte */
+.seal{
+  position:absolute; right:12px; bottom:12px; z-index:2;
+  pointer-events:none; /* optional auf auto setzen, wenn klickbar */
 }
-
-.seal img {
-  max-width: 28%;   /* Desktop: nimmt max. ~ein Drittel Breite */
-  height: auto;
+.seal img{
+  width: var(--seal-w); height:auto;
   filter: drop-shadow(0 2px 8px rgba(0,0,0,.35));
-  user-select: none;
+  user-select:none; pointer-events:auto;
 }
 
-/* Mobile: Siegel etwas größer, aber weiterhin rechts */
-@media (max-width: 480px) {
-  .seal { padding: 8px 10px 12px; }
-  .seal img { max-width: 40%; }
-
-/* Mobile-Feinheiten */
-@media (max-width: 480px) {
-  :root {
-    --seal-h: 60px;
-    --fs-h1: 16px;
-    --hero-min-h: 140px;
-    /* Startwerte kleiner – wird ggf. weiter runter geregelt */
-    --fs-quote: 18px;
-    --fs-author: 13px;
+/* Mobile: dezenter, kompakter */
+@media (max-width:480px){
+  :root{
+    --fs-h1:16px;
+    --fs-quote:18px;
+    --fs-author:13px;
+    --hero-min-h:120px;
+    --hero-max-h:320px;
+    --seal-w: 120px;
+    --seal-space: 86px;
   }
-  .header, .footer, .content { padding:16px 12px; }
+  .header,.footer,.content{padding:16px 10px}
 }
