@@ -115,29 +115,27 @@ button:active{transform:translateY(1px) scale(.99)}
 .muted{color: var(--muted); font-size:12px; margin-left:auto}
 .hidden{display:none}
 
-/* fixes Siegel unten (wie gehabt) */
-.seal-bar{
-  position:fixed; left:0; right:0; bottom:0; height:var(--seal-h);
-  display:grid; place-items:center;
-  background:linear-gradient(180deg, transparent, rgba(0,0,0,.20));
-  pointer-events:none; z-index:50;
-  padding-bottom: env(safe-area-inset-bottom);
+/* Siegel unten rechts, absolut in der Karte */
+.seal{
+  position:absolute; right:12px; bottom:12px; z-index:2;
+  pointer-events:none; /* optional auf auto setzen, wenn klickbar */
 }
-.seal-bar img{
-  height:calc(var(--seal-h) - 16px); width:auto;
-  filter:drop-shadow(0 2px 8px rgba(0,0,0,.35));
-  pointer-events:auto; user-select:none;
+.seal img{
+  width: var(--seal-w); height:auto;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.35));
+  user-select:none; pointer-events:auto;
 }
 
-/* Mobile Startwerte etwas kleiner; Fit-Logik regelt weiter runter bei Bedarf */
-@media (max-width:480px){
+/* Mobile: dezenter, kompakter */
+@media (max-width:200px){
   :root{
-    --seal-h:60px;
     --fs-h1:16px;
     --fs-quote:18px;
     --fs-author:13px;
     --hero-min-h:120px;
     --hero-max-h:320px;
+    --seal-w: 100px;
+    --seal-space: 86px;
   }
   .header,.footer,.content{padding:16px 10px}
 }
