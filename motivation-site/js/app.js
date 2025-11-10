@@ -104,9 +104,6 @@ function setPxVar(varName, num) {
 /* -------- Init -------- */
 export async function initApp(){
   setTime(); setInterval(setTime, 30_000);
-
-  el('btn-copy').addEventListener('click', copyCurrent);
-  el('btn-next').addEventListener('click', renderRandom);
   window.addEventListener('click', tryResumeAudio);
   window.addEventListener('touchstart', tryResumeAudio);
   window.addEventListener('keydown', tryResumeAudio);
