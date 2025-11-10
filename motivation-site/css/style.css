@@ -134,8 +134,8 @@ button:active{transform:translateY(1px) scale(.99)}
     --fs-author:13px;
     --hero-min-h:120px;
     --hero-max-h:320px;
-    --seal-w: 50px;
-    --seal-space: 30px;
+    --seal-w: 60px;
+    --seal-space: 40px;
   }
   .header,.footer,.content{padding:16px 10px}
 }
