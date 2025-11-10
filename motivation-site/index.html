@@ -2,9 +2,9 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>You are not allone!</title>
-  <link rel="preload" href="/css/style.css" as="style">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Motivation</title>
+  <link rel="preload" href="./css/style.css" as="style">
   <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
@@ -23,7 +23,19 @@
       <blockquote class="quote" id="quote" aria-live="polite"></blockquote>
       <div class="author" id="author"></div>
     </section>
+
+    <!-- Footer ohne sichtbare Buttons -->
+    <div class="footer">
+      <div class="row">
+        <!-- Unsichtbare Platzhalter, damit vorhandenes JS nicht crasht -->
+        <div id="btn-copy" hidden></div>
+        <div id="btn-next" hidden></div>
+        <span class="muted" id="status" hidden></span>
+      </div>
+    </div>
   </main>
+
+  <!-- Kein Siegel-Element mehr -->
 
   <script type="module">
     import { initApp } from './js/app.js';
