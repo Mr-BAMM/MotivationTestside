@@ -27,12 +27,7 @@
         "I feel like you getting as obsessed with the things you love as I do which is one of the greatest superpowers you can have in my opinion! ",
         "I hope you find the right environment where you can unfold your full potential!",
         "And if I can help you somehow, I just one call (and 594 km) away ;)"
-      ],
-      
-      "image": {
-        "src": "./assets/img/Bild3.jpg",
-        "credit": "Jakob"
-      }
+      ]
     },
     
   {
@@ -42,8 +37,7 @@
       "But currently it feels like you often have to set things you love (DJing, visiting your favourite German person, etc.) aside.",
       "I hope in the future you find ways where you don’t have to choose and can combine your goals and what you love!",
       "Because we are only living once and in my opinion, we are allowed to want and have it all! :)"
-    ], 
-    "image": {"src": "./assets/img/Bild4.jpg", "credit": "Jakob"}
+    ]
   },
   {
     "image": {"src": "./assets/img/Bild5.jpg", "credit": "Jakob"},
@@ -125,8 +119,7 @@
       "But this totally changed when I turned around 5 min later and saw that you followed me and just started performing the amazing octopus dance.",
       "Somehow this made me feel so happy! :)",
       "Hope we can dance together sometime soon!"
-    ],
-    "image": {"src": "./assets/img/Bild2.jpg", "credit": "Jakob"}
+    ]
   },
   {
     "text": [
