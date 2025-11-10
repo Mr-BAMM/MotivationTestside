@@ -1,7 +1,6 @@
 {
   "items": [
     {
-      // Spruch 1
       "image": {
         "src": "./assets/img/Bild1.jpg",
         "credit": "Jakob"
@@ -12,7 +11,6 @@
         "Keep being as open und positive as you are! :)"
       ]
     },
-    // Spruch 2
     {
       "image": {
         "src": "./assets/img/Bild2.jpg",
@@ -23,7 +21,6 @@
         "Because I not only learned the amazing octopus dance move, I also got such a wonderful new person in my live :)"
       ]
     },
-    // Spruch 3
     {
       "image": {
         "src": "./assets/img/Bild3.jpg",
@@ -72,7 +69,6 @@
       "Thanks for that! And feel free to show me more drawings and pages of your diary! I really love them :D"
     ]
   },
-  //Video Spruch
   {
     "image": {"src": "./assets/img/Bild8.jpg", "credit": "Jakob"},
     "text": [
