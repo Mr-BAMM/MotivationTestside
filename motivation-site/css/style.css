@@ -1,38 +1,57 @@
-:root { --bg:#0f172a; --card:#111827; --text:#e5e7eb; --muted:#9ca3af; --ring:rgba(255,255,255,.12); }
-html, body { height:100%; }
+:root {
+  --bg:#b91c1c;           /* Rot (Tailwind red-700 als solide Basis) */
+  --card:#111827;
+  --text:#e5e7eb;
+  --muted:#fca5a5;        /* heller Rot-Ton für Sekundärtext auf Rot */
+  --ring:rgba(255,255,255,.18);
+  --seal-h:72px;          /* Höhe der Siegel-Leiste unten */
+}
+
+/* Seite layouten: Scrollbar immer sichtbar, Inhalt oben starten */
+html, body { height: 100%; }
+html { scrollbar-gutter: stable both-edges; }
 body {
-  margin:0; display:flex; align-items:center; justify-content:center; min-height:100vh;
-  background: radial-gradient(1200px 800px at 70% 10%, #1f2937 0%, var(--bg) 60%); color:var(--text);
+  margin:0;
+  display:grid;
+  place-content: start center;     /* oben zentriert */
+  min-height:100dvh;
+  background: var(--bg);
+  color:var(--text);
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans";
+  padding: 24px 0 calc(var(--seal-h) + 24px); /* Platz für das Siegel unten */
+  overflow-y: auto;               /* explizit: Seite ist scroll-fähig */
 }
 
 /* Card/Layout */
 .card {
-  width:min(960px, 94vw); border-radius:20px; overflow:hidden;
+  width:min(960px, 94vw);
+  border-radius:20px;
+  overflow:hidden;
   background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
   box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.08); backdrop-filter: blur(8px);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
 }
 .header, .footer, .content { padding:22px 24px; }
 .header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
-h1 { font-size:18px; font-weight:600; margin:0; color:#cbd5e1; letter-spacing:.2px; }
+h1 { font-size:18px; font-weight:600; margin:0; color:#fde68a; letter-spacing:.2px; } /* gelblicher Akzent */
 .time { font-size:12px; color:var(--muted); }
 
 /* HERO (Letterboxing: nichts wird beschnitten) */
-.hero { 
+.hero {
   margin:0; position:relative; background:#0b1020;
-  min-height: clamp(220px, 38vw, 360px); /* feste Bühne, kein Layout-Sprung */
+  min-height: clamp(220px, 38vw, 360px);
 }
 #heroMedia {
-  display:flex; align-items:center; justify-content:center; /* Medien mittig */
+  display:flex; align-items:center; justify-content:center;
 }
 .hero #heroMedia > * {
   width:100%;
-  height:auto;                                   /* natürliche Höhe */
-  max-height: clamp(220px, 38vw, 360px);         /* begrenzt auf die Bühne */
-  object-fit: contain;                            /* NICHT zuschneiden */
+  height:auto;
+  max-height: clamp(220px, 38vw, 360px);
+  object-fit: contain;   /* nicht zuschneiden */
   display:block;
-  background:#0b1020;                             /* Balkenfarbe */
+  background:#0b1020;
 }
 
 .hero figcaption {
@@ -47,18 +66,66 @@ blockquote { margin:0; }
   font-size: clamp(18px, 2.6vw, 22px); line-height:1.5; letter-spacing:.15px;
 }
 .quote p:last-child { margin-bottom: 0; }
-.author { color:#a7b0be; font-size:14px; margin-top:16px; }
+.author { color:#ffe4e6; font-size:14px; margin-top:16px; }
 
 /* Footer / Buttons */
 .row { display:flex; gap:10px; flex-wrap:wrap; }
 button {
-  --alpha:.10; appearance:none; border:1px solid var(--ring); color:var(--text);
+  --alpha:.12; appearance:none; border:1px solid var(--ring); color:var(--text);
   background: rgba(255,255,255,var(--alpha)); padding:10px 14px; border-radius:12px; cursor:pointer; font-weight:600;
   transition: transform .06s ease, background .2s ease, border-color .2s ease;
 }
-button:hover { --alpha:.16; }
+button:hover { --alpha:.18; }
 button:active { transform: translateY(1px) scale(.99); }
-.ghost { --alpha:.06; }
+.ghost { --alpha:.08; }
 .muted { color: var(--muted); font-size:12px; margin-left:auto; }
 
 .hidden { display: none; }
+
+/* Fixe Siegel-Leiste unten */
+.seal-bar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: var(--seal-h);
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,0.20)); /* dezenter Fade */
+  pointer-events: none;                 /* klicks gehen durch – außer aufs Bild */
+  z-index: 50;
+}
+.seal-bar img {
+  height: calc(var(--seal-h) - 16px);
+  width: auto;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.35));
+  pointer-events: auto;                 /* Bild bleibt klickbar, falls verlinkt */
+  user-select: none;
+}
+
+/* Scrollbar-Styling (Cross-Browser so gut es geht) */
+/* Chromium/WebKit */
+*::-webkit-scrollbar {
+  width: 12px; height: 12px;
+}
+*::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.12);
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.35);
+  border-radius: 10px;
+  border: 3px solid rgba(0,0,0,0.12);
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.55);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;                         /* auto | thin | none */
+  scrollbar-color: rgba(255,255,255,0.55) rgba(0,0,0,0.12);
+}
+
+/* Kleine Responsiveness-Feinheiten */
+@media (max-width: 480px) {
+  :root { --seal-h: 60px; }
+  .header, .footer, .content { padding:18px 16px; }
+}
