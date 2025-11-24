@@ -135,10 +135,17 @@
 
   },
   {
-    "image": {"src": "./assets/img/Bild13.jpg", "credit": "Jakob"},
+    "image": {"src": "./assets/img/Bild13.jpg", "credit": "Cuddle"},
     "text": [
       "Hey cat-saving engineering girl,",
       "Cuddle just wanted to thank you for saving the kitten lately and bringing her home to her owners! That was awesome!"
+    ]
+  },
+  {
+    "image": {"src": "./assets/img/Bild13.jpg", "credit": "Cuddle"},
+    "text": [
+      "Hi Lili, stand still and keep your hands there where you can pet me!",
+      "This is a Cuddle-Attack!"
     ]
   },
   {
@@ -149,7 +156,7 @@
     ]
   },
   {
-    "image": {"src": "./assets/img/Bild15.jpg", "credit": "Jakob"},
+    "image": {"src": "./assets/img/Bild15.jpg", "credit": "Ami"},
     "text": [
       "Hi, this is Ami.",
       "I am suffering from a severe case of 'not getting enough cuddles.' Quick, Lili, come to Germany and cuddle me so that I can be saved from this terrible illness!",
