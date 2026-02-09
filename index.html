@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>SmartTap Gewinnspiel - Herzlichen Glückwunsch!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #2A326B 0%, #1a1f3a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            overflow: hidden;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px 25px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            margin-bottom: 30px;
+            animation: bounce 1s ease-in-out 0.5s infinite;
+        }
+
+        .logo img {
+            max-width: 300px;
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        h1 {
+            color: #2A326B;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .highlight {
+            color: #AEEA00;
+            font-weight: 700;
+        }
+
+        .message {
+            color: #555;
+            font-size: 1em;
+            margin: 25px 0;
+            line-height: 1.6;
+        }
+
+        .password-box {
+            background: linear-gradient(135deg, #AEEA00 0%, #9dd000 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(174, 234, 0, 0.3);
+            animation: slideUp 0.8s ease-out 0.3s both;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .password-label {
+            color: #2A326B;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .password {
+            background: white;
+            color: #2A326B;
+            font-size: 1.8em;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+            word-break: break-all;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-text {
+            color: #999;
+            font-size: 0.85em;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            line-height: 1.5;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #AEEA00;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .confetti.blue {
+            background: #2A326B;
+        }
+
+        .confetti.white {
+            background: white;
+            border: 2px solid #AEEA00;
+        }
+
+        /* Mobile Optimierung */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+                min-height: 100vh;
+            }
+
+            .container {
+                padding: 30px 20px;
+                border-radius: 15px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .message {
+                font-size: 0.95em;
+            }
+
+            .password {
+                font-size: 1.5em;
+                padding: 12px;
+            }
+
+            .password-label {
+                font-size: 0.8em;
+            }
+
+            .logo img {
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                padding: 25px 15px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .message {
+                font-size: 0.9em;
+                margin: 20px 0;
+            }
+
+            .password {
+                font-size: 1.3em;
+                padding: 10px;
+            }
+
+            .password-box {
+                padding: 15px;
+                margin: 20px 0;
+            }
+
+            .logo img {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="smarttap_logo.png" alt="SmartTap Logo" onerror="console.log('Logo konnte nicht geladen werden')">
+        </div>
+
+        <h1>Herzlichen <span class="highlight">Glückwunsch!</span></h1>
+
+        <div class="message">
+            Du hast die Chance auf einen <strong>kostenlosen SmartTap Schlüsselanhänger</strong> gewonnen!
+        </div>
+
+        <div class="password-box">
+            <div class="password-label">Dein Gewinnspiel-Passwort:</div>
+            <div class="password">6€-Business</div>
+        </div>
+
+        <div class="message">
+            Sage dem <strong>SmartTap Team</strong> das Passwort oben, um an der Verlosung teilzunehmen und deinen kostenlosen Schlüsselanhänger zu gewinnen!
+        </div>
+
+        <div class="footer-text">
+            Viel Glück bei der Verlosung!<br>
+            <strong>SmartTap</strong> - Dein innovatives Werbemittel für digitale Interaktionen
+        </div>
+    </div>
+
+    <script>
+        // Konfetti-Animation
+        function createConfetti() {
+            const confettiPieces = 40;
+            const colors = ['#AEEA00', '#2A326B', 'white'];
+
+            for (let i = 0; i < confettiPieces; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    
+                    const colorClass = colors[Math.floor(Math.random() * colors.length)];
+                    if (colorClass === '#AEEA00') {
+                        confetti.style.background = '#AEEA00';
+                    } else if (colorClass === '#2A326B') {
+                        confetti.classList.add('blue');
+                    } else {
+                        confetti.classList.add('white');
+                    }
+
+                    const startX = Math.random() * window.innerWidth;
+                    const startY = -10;
+                    const endX = startX + (Math.random() - 0.5) * 200;
+                    const duration = 2 + Math.random() * 1;
+
+                    confetti.style.left = startX + 'px';
+                    confetti.style.top = startY + 'px';
+                    confetti.style.width = (5 + Math.random() * 10) + 'px';
+                    confetti.style.height = confetti.style.width;
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+
+                    document.body.appendChild(confetti);
+
+                    const animation = confetti.animate([
+                        {
+                            transform: `translate(0, 0) rotate(0deg)`,
+                            opacity: 1
+                        },
+                        {
+                            transform: `translate(${endX - startX}px, ${window.innerHeight + 20}px) rotate(${Math.random() * 720}deg)`,
+                            opacity: 0
+                        }
+                    ], {
+                        duration: duration * 1000,
+                        easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                    });
+
+                    animation.onfinish = () => {
+                        confetti.remove();
+                    };
+                }, i * 30);
+            }
+        }
+
+        // Konfetti beim Laden starten
+        window.addEventListener('load', () => {
+            createConfetti();
+            
+            // Alle 5 Sekunden neue Konfetti
+            setInterval(createConfetti, 5000);
+        });
+    </script>
+</body>
+</html>
