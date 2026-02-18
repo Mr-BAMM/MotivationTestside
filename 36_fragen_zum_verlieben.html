@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>36 Fragen zum Verlieben</title>
+    <style>
+        :root {
+            --primary-color: #e63946;
+            --secondary-color: #f1faee;
+            --accent-color: #a8dadc;
+            --text-color: #1d3557;
+            --bg-gradient: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        h1 {
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .question-box {
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: rgba(230, 57, 70, 0.03);
+            border-radius: 15px;
+        }
+
+        .question-number {
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            line-height: 1.5;
+            font-weight: 500;
+            animation: fadeIn 0.5s ease-in-out;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+            font-weight: 600;
+            width: 100%;
+            max-width: 300px;
+            touch-action: manipulation;
+        }
+
+        button:hover {
+            background-color: #d62828;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(230, 57, 70, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(10px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        footer {
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            font-size: 0.75rem;
+            color: #999;
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        /* Mobile Optimierungen */
+        @media (max-width: 600px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            .container {
+                padding: 1.5rem 1rem;
+                border-radius: 15px;
+                margin-bottom: 60px;
+            }
+
+            h1 {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+
+            .question-box {
+                min-height: 200px;
+                padding: 1.2rem;
+                margin-bottom: 2rem;
+                border-radius: 12px;
+            }
+
+            .question-number {
+                font-size: 0.8rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .question-text {
+                font-size: 1.3rem;
+                line-height: 1.5;
+            }
+
+            button {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+                border-radius: 40px;
+                width: 100%;
+                max-width: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.2rem 0.8rem;
+                border-radius: 12px;
+            }
+
+            h1 {
+                font-size: 1rem;
+                margin-bottom: 1.8rem;
+            }
+
+            .question-box {
+                min-height: 180px;
+                padding: 1rem;
+                margin-bottom: 1.8rem;
+            }
+
+            .question-number {
+                font-size: 0.75rem;
+                margin-bottom: 0.6rem;
+            }
+
+            .question-text {
+                font-size: 1.2rem;
+                line-height: 1.4;
+            }
+
+            button {
+                padding: 0.9rem 1.8rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Landscape Mode */
+        @media (max-height: 600px) and (orientation: landscape) {
+            body {
+                min-height: auto;
+                padding: 0.5rem;
+            }
+
+            .container {
+                padding: 1rem;
+                margin-bottom: 0;
+            }
+
+            h1 {
+                margin-bottom: 1rem;
+                font-size: 1rem;
+            }
+
+            .question-box {
+                min-height: 120px;
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .question-text {
+                font-size: 1.1rem;
+            }
+
+            button {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            footer {
+                position: static;
+                margin-top: 1rem;
+            }
+        }
+
+        /* Verhindere Zoom bei Input-Fokus auf iOS */
+        input, button, textarea, select {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>36 Fragen zum Verlieben</h1>
+        <div class="question-box">
+            <div id="question-number" class="question-number">Frage #--</div>
+            <div id="question-text" class="question-text">Klicke auf den Button, um zu starten.</div>
+        </div>
+        <button onclick="nextQuestion()">Nächste Frage</button>
+    </div>
+
+    <footer>Basierend auf der Studie von Arthur Aron</footer>
+
+    <script>
+        const questions = [
+            "Wenn Du Dich für eine beliebige Person entscheiden könntest: Wen hättest Du gern als Tischgast beim Essen?",
+            "Wärst Du gern berühmt? In welcher Form?",
+            "Hast Du jemals geübt, was Du sagen wirst, bevor Du jemanden angerufen hast? Warum?",
+            "Was macht für Dich einen \"perfekten\" Tag aus?",
+            "Wann hast Du das letzte Mal für Dich selbst gesungen? Oder für jemand anderen?",
+            "Wenn es Dir möglich wäre, 90 Jahre alt zu werden, und Du ab dem Alter von 30 entweder den Körper oder den Geist eines 30-Jährigen für die letzten 60 Jahre Deines Lebens behalten könntest: Was von beiden würdest Du wählen?",
+            "Hast Du eine geheime Vorahnung davon, wie Du sterben wirst?",
+            "Nenne drei Dinge, die Du und Dein Gegenüber anscheinend gemeinsam haben.",
+            "Wofür in deinem Leben bist Du am dankbarsten?",
+            "Wenn Du irgendetwas an der Art und Weise, wie Du erzogen wurdest, ändern könntest, was wäre das?",
+            "Nimm Dir vier Minuten Zeit und erzähle Deinem Gegenüber die Geschichte Deines Lebens, so detailliert wie möglich.",
+            "Wenn Du morgen mit irgendeiner neuen Eigenschaft oder Fähigkeit aufwachen könntest, welche wäre es?",
+            "Wenn Dir eine Kristallkugel die Wahrheit über Dich, Dein Leben, Deine Zukunft und alles andere verraten würde, was würdest Du wissen wollen?",
+            "Gibt es etwas, das Du schon immer mal machen wolltest, aber nie getan hast?",
+            "Was ist der größte Erfolg Deines Lebens?",
+            "Was schätzt Du an einer Freundschaft am meisten?",
+            "Was ist Deine schönste Erinnerung?",
+            "Was ist Deine schlimmste Erinnerung?",
+            "Wenn Du wüsstest, dass Du in einem Jahr stirbst, würdest Du irgendetwas an Deiner Lebensweise ändern? Warum?",
+            "Was bedeutet Dir Freundschaft?",
+            "Welche Rolle spielen Liebe und Zuneigung in Deinem Leben?",
+            "Sagt euch abwechselnd, welche positiven Charakterzüge Euer Gegenüber hat. Nennt insgesamt fünf positive Eigenschaften.",
+            "Wie nah bist Du Deiner Familie? Wie herzlich zueinander? Hast Du das Gefühl, dass Deine Kindheit glücklicher war als die der meisten Leute?",
+            "Wie ist die Beziehung zu Deiner Mutter?",
+            "Jeder macht drei wahre \"Wir\"-Aussagen. Zum Beispiel: \"Wir sind beide in diesen Raum und fühlen uns…\"",
+            "Vervollständige diesen Satz: \"Ich wünschte ich hätte jemanden, mit dem ich … teilen könnte.\"",
+            "Wenn Du mit Deinem Gegenüber eng befreundet sein möchtest, was wäre dann für ihn oder sie wichtig zu wissen?",
+            "Sage Deinem Gegenüber, was Du an ihm magst; sei ehrlich mit ihm oder ihr und sage auch Dinge, die Du einer Person, die Du eben zum ersten Mal getroffen hast, vielleicht nicht sagen würdest.",
+            "Erzähle Deinem Gegenüber von einem peinlichen Moment in Deinem Leben.",
+            "Wann hast Du das letzte Mal vor einer anderen Person geweint? Wann hast Du das letzte Mal alleine geweint?",
+            "Sag Deinem Gegenüber etwas, dass Du jetzt schon an ihm magst.",
+            "Worüber sollte man keine Witze machen?",
+            "Wenn Du heute Abend sterben würdest, ohne mit jemand gesprochen zu haben, was würdest Du bereuen, nicht gesagt zu haben? Warum hast Du das nicht schon vorher jemandem erzählt?",
+            "Dein Haus, mit all seinen Besitztümern, fängt Feuer. Nachdem Du Deine Liebsten und die Haustiere gerettet hast, ist noch genug Zeit, um genau einen Gegenstand zu retten. Was würdest Du retten und warum?",
+            "Den Tod welches Familienmitgliedes würde Dich am meisten verstören und warum?",
+            "Erzähle Deinem Gegenüber von einem persönlichen Problem und frage, wie er oder sie mit dem Problem umgehen würde. Bitte Dein Gegenüber auch, zu reflektieren, wie Du gewirkt hast, als Du ihm/ihr von Deinem Problem erzählt hast."
+        ];
+
+        let usedIndexes = [];
+
+        function nextQuestion() {
+            if (usedIndexes.length === questions.length) {
+                usedIndexes = []; // Reset if all questions were shown
+            }
+
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * questions.length);
+            } while (usedIndexes.includes(randomIndex));
+
+            usedIndexes.push(randomIndex);
+
+            const questionText = document.getElementById('question-text');
+            const questionNumber = document.getElementById('question-number');
+
+            // Animation reset
+            questionText.style.animation = 'none';
+            questionText.offsetHeight; // trigger reflow
+            questionText.style.animation = null;
+
+            questionNumber.innerText = `Frage #${randomIndex + 1}`;
+            questionText.innerText = questions[randomIndex];
+
+            // Scroll to top on mobile
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Start with a random question on load
+        window.addEventListener('DOMContentLoaded', nextQuestion);
+    </script>
+</body>
+</html>
